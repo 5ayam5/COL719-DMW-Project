@@ -1,5 +1,6 @@
 import loops
 from Mapping import Mapping
+import matplotlib.pyplot as plt
 
 def get_mappings():
     maps = []
@@ -59,11 +60,24 @@ def get_mappings():
 
 if __name__ == "__main__":
     mappings = get_mappings()
+    base_costs = []
+    optimal_costs = []
     for i, loop in enumerate(loops.implemented):
         print(loop.__name__)
         base = loop(lambda x: x)
         optimal = loop(mappings[i])
+        base_costs.append(base)
+        optimal_costs.append(optimal)
         print("\tBase cost: %d" % base)
         print("\tOptimal cost: %d" % optimal)
         print("\tImprovement: %f%%" % (100 * (base - optimal) / base))
-    # print(loops.loop2(lambda x: x, debug=True))
+
+    plt.figure()
+    plt.semilogy(base_costs, label="Base")
+    plt.semilogy(optimal_costs, label="Optimal")
+    plt.legend()
+    plt.xlabel("Loop")
+    plt.ylabel("Cost")
+    plt.title("Cost of Base and Optimal Implementations")
+    plt.savefig("results.png")
+    plt.close()

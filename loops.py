@@ -3,8 +3,8 @@ from typing import Callable
 from Mapping import Mapping
 from math import sqrt
 
-N = 10000
-L = 5
+N = 500
+L = 10
 
 def loop1(mapping_function: Callable[[int], int], debug=False):
     mapping = Mapping(N * 3 + 11, mapping_function, debug)
